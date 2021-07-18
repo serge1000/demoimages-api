@@ -13,11 +13,11 @@ app.use(bodyParser.urlencoded({
   }));
 app.use(bodyParser.json());
 
-const send3Images = async (res) => {
+const returnImages = async (res, imageNumber) => {
   let imagedata;
   const results = [];
 
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < imageNumber; i++) {
     const robotID = (Math.floor(Math.random() * 1000) + 1).toString();
     try {
       axiosres = (await axios.get('https://robohash.org/'+ robotID , {
@@ -40,7 +40,12 @@ const send3Images = async (res) => {
 
 
 app.get('/getsearchimages', (req, res)=> { 
-  send3Images(res);
+  returnImages(res,3);
+});
+
+app.get('/getfoundimages', (req, res)=> { 
+  const imageNumber = (Math.floor(Math.random() * 10) + 1).toString();
+  returnImages(res, imageNumber);
 });
 
 
